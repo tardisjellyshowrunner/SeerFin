@@ -1,0 +1,1443 @@
+/* ============================================================
+   SeerFin — A Jellyfin Theme Inspired by Jellyseerr
+   Author: Generated for Alex @ POLARIS
+   Version: 1.8.0
+   Based on ElegantFin by lscambo13 as structural foundation.
+   Colour palette & aesthetic derived from Jellyseerr (seerr-team/seerr).
+
+   INSTALL:
+   Paste @import line into Jellyfin > Dashboard > Branding > Custom CSS
+   @import url("YOUR_HOSTED_URL/SeerFin.css");
+   ============================================================ */
+
+/* ============================================================
+   FONTS
+   Jellyseerr uses Inter. We layer in Source Serif for display
+   headings to add editorial weight distinct from ElegantFin.
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200..900;1,9..40,200..900&display=swap");
+
+/* ============================================================
+   MATERIAL ICONS (rounded — same as ElegantFin)
+   ============================================================ */
+@font-face {
+  font-family: "Material Icons Round";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/materialsymbolsrounded/v267/sykg-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190Fjzag.woff2) format("woff2");
+}
+
+/* ============================================================
+   ROOT DESIGN TOKENS
+   Jellyseerr palette:
+     Backgrounds: gray-900 (#111827), gray-800 (#1f2937), gray-700 (#374151)
+     Accent primary: orange-500 (#f97316) — request / CTA buttons
+     Accent secondary: teal-400 (#2dd4bf) — available / status
+     Text: gray-100 (#f3f4f6), gray-400 (#9ca3af)
+     Borders: gray-700 (#374151) with gray-600 highlights
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  /* ── Backgrounds — Jellyseerr gray-900/800/700 navy palette ── */
+  --sf-bg-base:        #111827;      /* Jellyseerr gray-900 — warm navy, not cold black */
+  --sf-bg-surface:     #1f2937;      /* Jellyseerr gray-800 — card surfaces, drawer */
+  --sf-bg-elevated:    #374151;      /* Jellyseerr gray-700 — hover states, elevated panels */
+  --sf-bg-overlay:     #2d3748;      /* tooltips, dropdowns */
+  --sf-bg-input:       #1a2232;      /* form fields */
+
+  /* ── Borders ── */
+  --sf-border:         rgba(55, 65, 90, 0.8);
+  --sf-border-subtle:  rgba(55, 65, 90, 0.4);
+  --sf-border-bright:  rgba(255, 255, 255, 0.12);
+
+  /* ── Primary accent — Jellyseerr orange ── */
+  --sf-accent:         #f97316;      /* orange-500 */
+  --sf-accent-hover:   #fb923c;      /* orange-400, lighter on hover */
+  --sf-accent-dim:     rgba(249, 115, 22, 0.15);
+  --sf-accent-alpha:   rgba(249, 115, 22, 0.85);
+  --sf-accent-border:  rgba(249, 115, 22, 0.5);
+
+  /* ── Secondary accent — teal (available / success) ── */
+  --sf-teal:           #2dd4bf;
+  --sf-teal-dim:       rgba(45, 212, 191, 0.12);
+
+  /* ── Status colours ── */
+  --sf-green:          #22c55e;
+  --sf-green-dim:      rgba(34, 197, 94, 0.15);
+  --sf-red:            #ef4444;
+  --sf-red-dim:        rgba(239, 68, 68, 0.15);
+  --sf-amber:          #f59e0b;
+  --sf-blue:           #3b82f6;
+
+  /* ── Typography ── */
+  --sf-text:           #e5e7eb;      /* gray-200 */
+  --sf-text-dim:       #9ca3af;      /* gray-400 */
+  --sf-text-faint:     #6b7280;      /* gray-500 */
+
+  /* ── Radii ── */
+  --sf-radius-xl:      1.25em;
+  --sf-radius-lg:      0.875em;
+  --sf-radius-md:      0.625em;
+  --sf-radius-sm:      0.375em;
+
+  /* ── Shadows ── */
+  --sf-shadow-card:    0 4px 24px rgba(0, 0, 0, 0.5);
+  --sf-shadow-sm:      0 1px 4px rgba(0, 0, 0, 0.35);
+  --sf-shadow-glow:    0 0 12px rgba(249, 115, 22, 0.2);
+
+  /* ── Blur ── */
+  --sf-blur-sm:        blur(4px);
+  --sf-blur-md:        blur(10px);
+  --sf-blur-lg:        blur(20px);
+
+  /* ── Gradients ── */
+  --sf-bg-gradient:    linear-gradient(160deg, #111827 0%, #1f2937 100%);
+  --sf-card-gradient:  linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  --sf-header-gradient:linear-gradient(180deg, rgba(17,24,39,0.97) 0%, 60%, transparent 100%);
+  --sf-footer-overlay: linear-gradient(0deg, rgba(0,0,0,0.92) 0%, 40%, transparent 100%);
+  --sf-osd-top:        linear-gradient(180deg, rgba(0,0,0,0.85) 0%, 45%, transparent 100%);
+  --sf-osd-bottom:     linear-gradient(0deg,   rgba(0,0,0,0.85) 0%, 45%, transparent 100%);
+  --sf-backdrop-mask:  linear-gradient(180deg, rgba(0,0,0,0.75), 70%, transparent);
+
+  /* ── Layout ── */
+  --sf-side-padding:   3.3%;
+  --sf-gap:            1em;
+  --sf-header-height:  5em;
+  --sf-border-width:   0.06em;
+  --sf-border-dbl:     0.12em;
+
+  /* ── Footer label ── */
+  --sf-footer-text:    "SeerFin v1.1";
+
+  /* ── Feature flags (match ElegantFin variable names Jellyfin reads) ── */
+  --overlayPlayButtonPosition: 2.8em;
+  --iconPack:                  "Material Icons Round", Material Icons;
+  --extraCardButtonsVisibility: none;
+  --itemOriginalTitleVisibility: block;
+  --libraryLabelVisibility:    none;
+  --clearLogoVisibility:       block;
+  --itemTitleVisibility:       none;
+  --miniOverlayButtonVisibility: block;
+  --cardHoverEffect:           "";
+  --appBarHeight:              5em;
+  --backdropTrimFromTop:       10%;
+
+  /* ── ElegantFin-compatible variable aliases ── */
+  --darkerGradientPoint:       #111827;
+  --darkerGradientPointAlpha:  rgba(17, 24, 39, 0.88);
+  --lighterGradientPoint:      #1f2937;
+  --lighterGradientPointAlpha: rgba(31, 41, 55, 0.88);
+  --gradientPointAlpha:        rgba(31, 41, 55, 0.3);
+  --headerColor:               rgba(17, 24, 39, 0.92);
+  --drawerColor:               rgba(17, 24, 39, 0.97);
+  --borderColor:               hsl(220, 20%, 30%);
+  --darkerBorderColor:         hsl(220, 20%, 20%);
+  --lighterBorderColor:        rgba(255, 255, 255, 0.12);
+  --selectorBackgroundColor:   rgb(30, 37, 53);
+  --selectorBackgroundColorAlpha: rgba(30, 37, 53, 0.5);
+  --activeColor:               #f97316;
+  --activeColorAlpha:          rgba(249, 115, 22, 0.85);
+  --uiAccentColor:             #f97316;
+  --textColor:                 #e5e7eb;
+  --dimTextColor:              #9ca3af;
+  --tableBodyColor:            rgb(22, 27, 38);
+  --btnMiniPlayColor:          rgb(41, 154, 93);
+  --btnMiniPlayBorderColor:    rgb(50, 167, 105);
+  --btnDeleteColor:            #b91c1c;
+  --btnDeleteBorderColor:      #ef4444;
+  --btnSubmitColor:            #ea6b0e;
+  --btnSubmitBorderColor:      #f97316;
+  --checkboxCheckedBgColor:    #f97316;
+  --highlightOutlineColor:     #f97316;
+  --osdSeekBarPlayedColor:     var(--textColor);
+  --osdSeekBarBufferedColorAlpha: rgba(128, 128, 128, 0.5);
+  --osdSeekBarThumbColor:      white;
+  --backgroundGradient:        var(--sf-bg-gradient);
+  --cardBackgroundGradient:    var(--sf-card-gradient);
+  --headerColorGradient:       var(--sf-header-gradient);
+  --headerColorGradientAlt:    linear-gradient(180deg, rgba(17,24,39,1), 70%, transparent);
+  --headerBlurMask:            linear-gradient(180deg, white 50%, 85%, transparent);
+  --headerBlurLayerVisibility: "";
+  --headerBackground:          var(--headerColorGradient);
+  --cardFooterGradient:        var(--sf-footer-overlay);
+  --topOSDGradient:            var(--sf-osd-top);
+  --bottomOSDGradient:         var(--sf-osd-bottom);
+  --hoverGradientV:            linear-gradient(0deg, transparent, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 55%, transparent);
+  --hoverGradientH:            linear-gradient(90deg, transparent, rgba(255,255,255,1) 45%, rgba(255,255,255,1) 55%, transparent);
+  --itemBackdropMask:          var(--sf-backdrop-mask);
+  --largerRadius:              var(--sf-radius-xl);
+  --largeRadius:               var(--sf-radius-lg);
+  --smallRadius:               var(--sf-radius-md);
+  --smallerRadius:             var(--sf-radius-sm);
+  --borderWidth:               var(--sf-border-width);
+  --borderWidthDouble:         var(--sf-border-dbl);
+  --sidePadding:               var(--sf-side-padding);
+  --itemColumnGap:             var(--sf-gap);
+  --minEpisodeCardWidth:       26em;
+  --blurSmallest:              blur(2px);
+  --blurDefault:               var(--sf-blur-sm);
+  --blurLarge:                 var(--sf-blur-md);
+  --blurLargest:               var(--sf-blur-lg);
+  --shadow:                    var(--sf-shadow-sm);
+  --defaultBorder:             var(--sf-border-width) solid var(--borderColor);
+  --defaultLighterBorder:      var(--sf-border-width) solid var(--lighterBorderColor);
+  --loginPageBgUrl:            url("");
+  --loginPageText:             "Sign in to continue";
+  --clearLogoBottomSpace:      11em;
+  --primaryItemPageNegativeSpace: 14vh;
+  --secondaryItemPageNegativeSpace: 60vh;
+}
+
+/* ============================================================
+   GLOBAL BASE
+   ============================================================ */
+html {
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 420;
+  font-style: normal;
+  -webkit-tap-highlight-color: transparent !important;
+  background: #111827 !important;
+}
+
+body {
+  background: #111827 !important;
+  --primaryItemPageNegativeSpace: 14vh;
+  --secondaryItemPageNegativeSpace: 60vh;
+  --clearLogoBottomSpace: 11em;
+}
+
+/* Force all page/content backgrounds to Jellyseerr navy
+   Exclude video player context to prevent covering the video */
+.backgroundContainer,
+.backgroundContainer-withBackdrop {
+  background: #111827 !important;
+  z-index: 0 !important;
+}
+
+.homePage,
+.libraryPage,
+.standardPage {
+  background: #111827 !important;
+}
+
+/* Video player must always render above backgrounds */
+.videoPlayerContainer,
+.htmlvideoplayer,
+.videoPlayerContainer video,
+video {
+  z-index: 10 !important;
+  background: transparent !important;
+}
+
+/* OSD sits above video */
+.videoOsdBottom,
+.videoOsdTop,
+.skinHeader.osdHeader {
+  z-index: 20 !important;
+}
+
+
+.layout-desktop > body:has(> audio[src]) {
+  --primaryItemPageNegativeSpace: calc(14vh + 5em);
+  --secondaryItemPageNegativeSpace: calc(60vh + 5em);
+}
+
+.layout-mobile {
+  --itemColumnGap: 0;
+  --headerColorGradient: var(--headerColorGradientAlt);
+  --blurLargest: blur(12px);
+  --headerBlurMask: linear-gradient(180deg, white 60%, 90%, transparent);
+}
+
+.layout-mobile > body {
+  --secondaryItemPageNegativeSpace: 45vh;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+  background: var(--activeColorAlpha);
+}
+
+/* ============================================================
+   ACCENT COLOUR OVERRIDES
+   Replace ElegantFin's indigo/purple with Jellyseerr orange
+   ============================================================ */
+
+/* Primary focus / highlight */
+.emby-button.show-focus:focus,
+.paper-icon-button-light.show-focus:focus,
+.emby-tabs .emby-button.show-focus:focus {
+  background-color: var(--sf-accent) !important;
+  color: #fff !important;
+}
+
+.emby-tabs .emby-button.show-focus:focus { outline: none !important; }
+
+.mdl-radio__focus-circle,
+.mdl-radio.show-focus .mdl-radio__button:focus + .mdl-radio__circles .mdl-radio__outer-circle,
+.mdl-radio.show-focus .mdl-radio__button:focus + .mdl-radio__circles .mdl-radio__inner-circle {
+  background: var(--sf-accent);
+  color: var(--sf-accent);
+}
+
+/* ============================================================
+   TAB BAR
+   Correct classes from DOM: .emby-tab-button inside .emby-tabs-slider
+   Note: .emby-tabs-slider is the BUTTON WRAPPER, not just the indicator
+   — do NOT hide it or buttons disappear entirely
+   ============================================================ */
+.headerTabs,
+.sectionTabs {
+  background: #111827 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  min-height: 3.5em !important;
+  height: 3.5em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.tabs-viewmenubar,
+.emby-tabs {
+  background: #111827 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 3.5em !important;
+  overflow: visible !important;
+}
+
+/* The slider div is the button container — keep it visible, just style it */
+.emby-tabs-slider {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  background: transparent !important;
+  white-space: nowrap;
+}
+
+/* The actual tab buttons */
+.emby-tab-button {
+  color: rgba(156, 163, 175, 0.85) !important;
+  background: transparent !important;
+  font-size: 0.95em !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  transition: color 150ms ease, background 150ms ease !important;
+  padding: 0 1.25em !important;
+  height: 2.25em !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 0.5em !important;
+  border: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  cursor: pointer !important;
+  margin: 0 0.2em !important;
+}
+
+.emby-tab-button:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.emby-tab-button.emby-tab-button-active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+  font-weight: 600 !important;
+}
+
+/* Button text wrapper */
+.emby-tab-button .emby-button-foreground {
+  color: inherit !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Active sidebar item colour handled in SIDE DRAWER section above */
+
+/* ============================================================
+   MATERIAL ICONS
+   ============================================================ */
+.material-icons {
+  font-family: var(--iconPack) !important;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+.material-icons.info_outline:before {
+  content: "\e88e";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+/* ============================================================
+   FOOTER / BRANDING
+   ============================================================ */
+.dashboardFooter { font-family: "DM Sans", serif; transition: transform 50ms; }
+
+#myPreferencesMenuPage > div:after,
+.dashboardFooter::after {
+  content: var(--sf-footer-text);
+  font-size: 0.8em;
+  color: var(--sf-text-faint);
+  display: inline-grid;
+  width: 100%;
+  width: -webkit-fill-available;
+  justify-content: center;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   HEADER / NAVIGATION BAR
+   Jellyseerr-style: darker, tighter, subtle separator
+   ============================================================ */
+.skinHeader {
+  background: #111827 !important;
+}
+
+.skinHeader-withBackground {
+  background: #111827 !important;
+  border-bottom: 1px solid rgba(55, 65, 90, 0.35) !important;
+}
+
+.skinHeader-withBackground:not(.semiTransparent) .headerHomeButton { display: none; }
+.layout-mobile:has(#itemDetailPage:not(.hide)) .headerHomeButton { display: block; }
+
+/* ============================================================
+   SIDE DRAWER
+   Jellyseerr sidebar: active = purple gradient pill, hover = grey pill
+   ============================================================ */
+.mainDrawer {
+  background: rgba(17, 24, 39, 0.97) !important;
+  border-right: 1px solid rgba(55, 65, 90, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.navMenuOption {
+  border-radius: 0.5em !important;
+  margin: 0.15em 0.5em !important;
+  transition: background 150ms ease, color 150ms ease !important;
+  color: rgba(156, 163, 175, 0.85) !important;
+}
+
+.navMenuOption:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.navMenuOption.is-selected {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+  color: #ffffff !important;
+  border-left: none !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================================
+   CARDS
+   Jellyseerr cards: dark surface, rounded, sharp orange hover ring
+   ============================================================ */
+.cardScalable {
+  border-radius: var(--sf-radius-lg);
+  border: var(--darkerBorderColor) solid var(--sf-border-dbl) !important;
+  overflow: hidden !important;
+  box-shadow: var(--sf-shadow-card);
+  transition: transform 125ms ease, box-shadow 125ms ease;
+}
+
+@supports (aspect-ratio: 1 / 1) {
+  #castCollapsible .cardScalable,
+  #guestCastContent .cardScalable {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+  }
+}
+
+#castCollapsible .cardContent.cardImageContainer,
+#guestCastContent .cardContent.cardImageContainer { background-position-y: 33%; }
+
+.layout-mobile .cardScalable { border: var(--defaultBorder) !important; }
+
+.visualCardBox,
+.paperList {
+  background-color: var(--headerColor) !important;
+  border-radius: var(--sf-radius-lg) !important;
+  border: var(--defaultBorder) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.layout-desktop .visualCardBox { border-width: var(--sf-border-dbl) !important; }
+
+.visualCardBox .cardScalable {
+  border-width: 0 0 var(--sf-border-width) 0 !important;
+  border-radius: 0 !important;
+  border-color: var(--darkerBorderColor) !important;
+}
+
+.cardImageContainer { transition: transform 0.375s ease; }
+
+.card.squareCard[data-type="TvChannel"] .cardImageContainer.cardContent {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cardImageContainer > .cardDefaultText {
+  font-size: 2em;
+  padding-top: 1.5em;
+  color: transparent;
+  white-space: pre;
+}
+
+.cardImageContainer > .cardDefaultText::before {
+  content: "?\A";
+  color: var(--sf-text-faint);
+}
+
+/* Card hover: subtle orange 1px border + faint glow — not heavy */
+.card-hoverable:hover .cardScalable,
+.card-hoverable:hover .visualCardBox {
+  border-color: rgba(249, 115, 22, 0.6) !important;
+  box-shadow: 0 0 0 0px transparent, var(--sf-shadow-card) !important;
+}
+
+.card-hoverable:hover .visualCardBox .cardScalable {
+  border-color: var(--darkerBorderColor) !important;
+}
+
+.card-hoverable:hover .cardImageContainer { transform: scale(1.025); }
+
+.card-hoverable .itemSelectionPanel { transition: transform 0.125s ease; }
+
+.card-hoverable:hover .cardScalable,
+.card-hoverable:hover .itemSelectionPanel { transform: scale(1.02); }
+
+.card-hoverable .cardScalable:active {
+  transition: transform 0.075s;
+  transform: scale(1);
+}
+
+.cardScalable:has(.cardOverlayButton-hover:hover) > .cardImageContainer { transform: scale(1); }
+
+/* Card overlay shimmer */
+.cardOverlayContainer {
+  transition: 0.5s;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cardOverlayContainer:after {
+  content: var(--cardHoverEffect);
+  transition: 0.5s;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  transform: translateY(-50%) translateX(0);
+  background: var(--hoverGradientV);
+}
+
+.card-hoverable:hover .cardOverlayContainer:after {
+  transform: translateY(50%) translateX(0);
+  opacity: 0;
+}
+
+.backdropCard.card-hoverable .cardOverlayContainer:after,
+.overflowBackdropCard.card-hoverable .cardOverlayContainer:after {
+  transform: translateY(0) translateX(-50%);
+  background: var(--hoverGradientH);
+}
+
+.backdropCard.card-hoverable:hover .cardOverlayContainer:after,
+.overflowBackdropCard.card-hoverable:hover .cardOverlayContainer:after {
+  transform: translateY(0) translateX(50%);
+  opacity: 0;
+}
+
+.cardBox:not(.visualCardBox) .cardPadder {
+  background-color: var(--lighterGradientPoint);
+}
+
+/* Card image icon */
+.cardImageIcon { color: var(--borderColor); }
+.cardPadder .cardImageIcon { color: var(--selectorBackgroundColorAlpha); }
+
+/* Card focus ring */
+.card:focus .cardBox.visualCardBox,
+.card:focus .cardBox:not(.visualCardBox) .cardScalable {
+  border-color: var(--sf-accent) !important;
+}
+
+/* ============================================================
+   PLAY / OVERLAY BUTTONS
+   Mini play = green (consistent with Jellyseerr's available state)
+   ============================================================ */
+.cardOverlayContainer > .cardOverlayFab-primary {
+  left: unset;
+  margin-left: unset;
+  margin-top: unset;
+  top: unset;
+  left: calc(var(--overlayPlayButtonPosition) - 1.5em);
+  bottom: calc(var(--overlayPlayButtonPosition) - 1.5em);
+}
+
+.cardOverlayContainer > .cardOverlayFab-primary,
+.listItemImageButton,
+.layout-mobile .cardOverlayButton-br:not([data-action="menu"]) > .cardOverlayButtonIcon {
+  background-color: var(--btnMiniPlayColor) !important;
+  color: white;
+  border: var(--defaultLighterBorder);
+  border-color: var(--btnMiniPlayBorderColor);
+  font-size: 75%;
+  box-shadow: var(--sf-shadow-sm);
+  z-index: 2;
+}
+
+.cardOverlayContainer > .cardOverlayFab-primary:hover,
+.listItemImageButton:hover { color: white; }
+
+.cardOverlayButton-br .cardOverlayButton-hover[data-action="menu"],
+.layout-desktop .listItemButton[data-action="menu"] { display: none; }
+
+.layout-desktop .cardOverlayButton-br,
+[dir="ltr"].layout-desktop .cardOverlayButton-br {
+  bottom: 0.75em;
+  right: 0.5em;
+  display: var(--extraCardButtonsVisibility);
+  z-index: 1;
+}
+
+.layout-desktop .cardOverlayButton-br button { color: white; text-shadow: var(--sf-shadow-sm); }
+
+.layout-mobile .cardOverlayButton { padding: 1em; font-size: 60%; }
+
+.layout-mobile .cardOverlayButton-br,
+[dir="ltr"] .layout-mobile .cardOverlayButton-br { bottom: 0.25em; right: 0.25em; display: var(--miniOverlayButtonVisibility); }
+
+.layout-mobile .portraitCard .cardOverlayButton-br:not([data-action="menu"]),
+.layout-mobile .backdropCard .cardOverlayButton-br:not([data-action="menu"]) { display: none; }
+
+.layout-mobile .cardOverlayButton-br[data-action="menu"] > .cardOverlayButtonIcon {
+  background-color: transparent !important;
+  color: white;
+  border: none;
+  text-shadow: 1px 1px 0.1em black;
+}
+
+.cardOverlayContainer:has(> button:hover) { backdrop-filter: var(--blurDefault); }
+
+/* ============================================================
+   BUTTONS — Jellyseerr-style orange primary
+   ============================================================ */
+
+/* Default raised button */
+.raised.emby-button,
+.emby-button.raised {
+  background: var(--sf-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--sf-radius-md) !important;
+  font-weight: 600 !important;
+  transition: background 150ms ease, transform 100ms ease !important;
+}
+
+.raised.emby-button:hover,
+.emby-button.raised:hover {
+  background: var(--sf-accent-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary / ghost button — exclude tab bar buttons */
+.emby-button:not(.raised):not(.emby-tabs-tab):not(.pageTabButton) {
+  border-radius: var(--sf-radius-md) !important;
+  transition: background 150ms ease !important;
+}
+
+.emby-button:not(.raised):not(.emby-tabs-tab):not(.pageTabButton):hover {
+  background: var(--sf-bg-elevated) !important;
+}
+
+/* Delete buttons */
+.btnDelete,
+.button-delete { background: var(--btnDeleteColor) !important; border-color: var(--btnDeleteBorderColor) !important; }
+
+/* Submit/save buttons */
+.btnSubmit,
+.button-submit,
+.button-save { background: var(--btnSubmitColor) !important; border-color: var(--btnSubmitBorderColor) !important; }
+
+/* ============================================================
+   PROGRESS BARS — orange
+   ============================================================ */
+.itemProgressBar,
+.progress,
+.playbackProgress {
+  background: rgba(255,255,255,0.12) !important;
+  border-radius: 99px !important;
+}
+
+.itemProgressBarForeground,
+.progressinner { background: var(--sf-accent) !important; }
+
+/* ============================================================
+   BADGES / INDICATORS
+   ============================================================ */
+.countIndicator,
+.fullSyncIndicator,
+.mediaSourceIndicator {
+  background: var(--sf-blue);
+  border: var(--defaultLighterBorder);
+  border-radius: var(--sf-radius-sm);
+}
+
+.playedIndicator { background: var(--sf-accent) !important; }
+
+/* ============================================================
+   STAR RATING — Jellyseerr teal/cyan gradient
+   ============================================================ */
+.starIcon {
+  background: linear-gradient(to right, var(--sf-teal), #67e8f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: -0.125em;
+  transform: translateY(-0.02em);
+}
+
+/* ============================================================
+   MEDIA INFO CHIPS
+   ============================================================ */
+.mediaInfoItem {
+  border-radius: var(--sf-radius-sm);
+  font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.itemMiscInfo-primary { column-gap: 0.5em; }
+
+.mediaInfoOfficialRating {
+  background: transparent !important;
+  font-size: 0.75em;
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.5em;
+  transform: translateY(-0.15em);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: var(--defaultBorder);
+  color: var(--sf-text);
+}
+
+[dir="ltr"] .mediaInfoCriticRating { background-size: 30%; padding-left: 1.5em; }
+[dir="ltr"] .mediaInfoCriticRating::after { content: "%"; }
+
+/* ============================================================
+   SECTION TITLES — bold, larger, matching Jellyseerr
+   ============================================================ */
+.sectionTitle,
+.layout-desktop .sectionTitle,
+.layout-tv .sectionTitle {
+  font-size: 1.35rem !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  color: #ffffff !important;
+}
+
+/* No decorative underline */
+.sectionTitle::after {
+  display: none;
+}
+
+/* ============================================================
+   CONTENT AREA SPACING
+   Push page content down from the header/tab bar
+   ============================================================ */
+.padded-top-page,
+.padded-bottom-page,
+.mainAnimatedPage > .page {
+  padding-top: 1.5em !important;
+}
+
+.verticalSection.emby-scroller-container > h2.sectionTitle.sectionTitle-cards {
+  padding-top: 1.25em !important;
+  margin: 0 0 -0.5em 0;
+}
+
+/* ============================================================
+   PAGE TITLE / HEADER TEXT
+   ============================================================ */
+.pageTitle {
+  height: 1.5em;
+  font-family: "DM Sans", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.headerLeft .pageTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   SCROLLER / SCROLL BUTTONS
+   ============================================================ */
+#itemDetailPage .emby-scroller-container,
+#itemDetailPage .emby-scroller,
+#itemDetailPage .scrollX {
+  margin: 0 calc(-1 * var(--sidePadding));
+  padding-left: calc(var(--sidePadding) - 0.375em);
+}
+
+.layout-desktop .emby-scroller-container,
+.layout-desktop .emby-scroller,
+.layout-desktop .scrollX { --itemColumnGap: 0.5em; }
+
+.emby-scroller,
+.scrollX { padding-left: calc(var(--sidePadding) - 0.375em); }
+
+.sectionTabs .scrollX { padding-left: 0; }
+
+.itemsContainer:not(.editorsChoiceItemsContainer) { column-gap: var(--itemColumnGap); }
+
+.emby-scrollbuttons,
+[dir="ltr"] .emby-scrollbuttons { padding-top: 1.25em; }
+
+.sectionTitleContainer + .emby-scrollbuttons { padding-top: 0; }
+
+.emby-scrollbuttons-button.paper-icon-button-light > .material-icons {
+  font-size: 1.5em;
+  place-content: center;
+}
+
+/* ============================================================
+   DETAIL PAGE — Jellyseerr's immersive backdrop hero
+   ============================================================ */
+.detailPageWrapperContainer { padding-top: unset; margin-top: unset; }
+
+.layout-desktop .detailPageWrapperContainer {
+  background: transparent;
+  min-height: 46vh;
+  background: linear-gradient(180deg, transparent, 17vh, var(--darkerGradientPointAlpha) 50vh);
+}
+
+.layout-tv .detailPageWrapperContainer {
+  padding-left: 30vw;
+  background: transparent;
+  min-height: 46vh;
+  background: linear-gradient(0deg, var(--darkerGradientPointAlpha) 70%, 85%, transparent);
+}
+
+.detailPagePrimaryContainer {
+  align-content: space-between;
+  align-items: stretch;
+  justify-content: end;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+
+.layout-mobile .detailPagePrimaryContainer.detailRibbon,
+.layout-mobile .detailPagePrimaryContainer > .detailRibbon { padding: 0 var(--sidePadding); }
+
+.layout-desktop .detailPagePrimaryContainer { background: transparent; }
+.layout-desktop .detailPageSecondaryContainer { background-color: transparent; }
+
+.detailPagePrimaryContainer > .detailPagePrimaryContent,
+[dir=ltr] .detailPagePrimaryContainer > .detailRibbon,
+[dir=ltr] .detailPagePrimaryContainer.detailRibbon { padding-left: var(--sidePadding); }
+
+.layout-mobile .detailPagePrimaryContent {
+  padding-left: var(--sidePadding) !important;
+  padding-right: var(--sidePadding) !important;
+}
+
+.layout-desktop [dir="ltr"] .detailRibbon,
+.layout-tv [dir="ltr"] .detailRibbon { flex-direction: column; }
+
+.detailPagePrimaryContainer > .detailPagePrimaryContent { padding-top: 0; }
+.detailPageSecondaryContainer { padding-top: 0 !important; }
+
+/* Detail page backdrop */
+.itemBackdrop { display: block !important; }
+
+.layout-desktop .itemBackdrop {
+  height: calc(100vh - 27vh - var(--primaryItemPageNegativeSpace));
+}
+
+.layout-mobile .itemBackdrop {
+  margin-top: 0;
+  position: sticky;
+  top: -30%;
+  -webkit-mask: var(--itemBackdropMask);
+  mask: var(--itemBackdropMask);
+  animation: sf-fade-down 0.5s ease-out forwards;
+  height: 45vh;
+}
+
+.layout-tv .itemBackdrop { height: 33vh; }
+
+#itemDetailPage:has(.subtitle) .itemBackdrop,
+#itemDetailPage:has(.musicParentName) .itemBackdrop,
+#itemDetailPage:has(.detailImageContainer .backdropCard) .itemBackdrop,
+#itemDetailPage:has(.detailImageContainer .person) .itemBackdrop,
+#itemDetailPage:has(.detailImageContainer .queue) .itemBackdrop,
+#itemDetailPage:has(.detailImageContainer .book) .itemBackdrop,
+#itemDetailPage:has(.detailImageContainer .live_tv) .itemBackdrop {
+  height: calc(100vh - 27vh - var(--secondaryItemPageNegativeSpace));
+}
+
+#itemDetailPage:has(.detailImageContainer .cardPadder-square:not(.person)) .itemBackdrop {
+  height: calc(100vh - 20vh - var(--secondaryItemPageNegativeSpace));
+}
+
+/* ============================================================
+   CLEAR LOGO
+   ============================================================ */
+.detailLogo {
+  display: var(--clearLogoVisibility);
+  top: calc(100vh - var(--clearLogoBottomSpace) - var(--primaryItemPageNegativeSpace));
+  left: 0;
+  width: 40%;
+  transform: translateY(-100%);
+  margin: auto 30%;
+  height: 25vh;
+  background-position: bottom;
+}
+
+.layout-mobile .detailLogo {
+  display: var(--clearLogoVisibility);
+  z-index: 1;
+  position: absolute;
+  left: 1em;
+  top: 45vh;
+  margin: auto 0;
+  width: calc(100vw - 2em);
+  max-height: 17vh;
+  animation: sf-logo-up 1s ease-out forwards;
+}
+
+.layout-tv .detailLogo {
+  display: var(--clearLogoVisibility);
+  height: 20vh;
+  top: 39vh;
+  left: 30vw;
+  width: 60vw;
+  margin: auto 5vw;
+}
+
+#itemDetailPage:has(.subtitle) .detailLogo {
+  top: calc(100vh - 6em - var(--secondaryItemPageNegativeSpace));
+}
+
+.layout-mobile #itemDetailPage:has(.subtitle) .detailLogo {
+  top: calc(100vh - 11em - var(--secondaryItemPageNegativeSpace));
+}
+
+/* ============================================================
+   DETAIL IMAGE CONTAINER
+   ============================================================ */
+.layout-desktop .detailImageContainer .card {
+  position: relative !important;
+  width: 22vh !important;
+  float: none;
+  left: 0 !important;
+  top: 0;
+  right: 0;
+  margin: auto;
+  margin-bottom: 0;
+  place-self: center;
+}
+
+.detailImageContainer .card.backdropCard { width: 40vh !important; max-width: 50vw; }
+.detailImageContainer .card { display: none; }
+
+.layout-tv .detailImageContainer .card {
+  width: 25vw !important;
+  display: block !important;
+  position: fixed !important;
+  top: 0; bottom: 0;
+  margin: auto;
+  left: var(--sidePadding);
+  align-content: center;
+  transform: none;
+}
+
+.layout-mobile .detailImageContainer .card {
+  filter: drop-shadow(0 0 0.35rem rgba(0, 0, 0, 0.35));
+}
+
+.layout-mobile [dir="ltr"] .infoWrapper,
+.layout-mobile .infoWrapper { padding-left: 0; }
+
+.infoWrapper { align-content: end; place-items: center; display: grid; text-align: center; }
+
+.layout-mobile .detailImageContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-left: 0 !important;
+}
+
+.layout-mobile .detailImageContainer:has(.card:not(.portraitCard)) { height: 0; }
+
+.layout-mobile .detailImageContainer .card {
+  position: inherit !important;
+  margin-top: -150%;
+  max-width: 60vw;
+}
+
+/* ============================================================
+   DETAIL RIBBON / METADATA
+   ============================================================ */
+.detailRibbon { background-color: transparent; }
+
+.detailRibbon:has(.portraitCard .folder) { min-height: 32vh; align-content: flex-end; }
+
+.layout-desktop .detailRibbon { height: 100%; min-height: 25vh; margin-top: unset; }
+
+/* ============================================================
+   LIST VIEWS (episodes, etc)
+   ============================================================ */
+.listViewUserDataButtons { font-size: small; }
+.layout-mobile .listViewUserDataButtons { flex-direction: column; font-size: x-small; }
+
+@supports (display: revert) {
+  .layout-desktop .vertical-list:has(.listItem-largeImage) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--minEpisodeCardWidth), 100%), 1fr));
+    gap: var(--itemColumnGap);
+  }
+
+  .layout-desktop .listItem-largeImage {
+    display: grid;
+    margin-bottom: 0 !important;
+  }
+
+  .layout-desktop .listItem-largeImage > .listItem-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2em;
+    order: 1;
+    height: 100%;
+    align-items: start;
+  }
+
+  .layout-desktop .listItem-largeImage > .listItem-bottomoverview { order: 2; }
+
+  .layout-desktop .listItem-largeImage .listItemImage-large {
+    order: 1;
+    grid-column: 1 / -1;
+    height: max-content;
+    min-height: 15em;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    box-sizing: border-box;
+  }
+
+  .layout-desktop .listItem-largeImage .listItemBody {
+    order: 2;
+    grid-column: 1 / 3;
+    padding: 1em 0.125em;
+  }
+
+  .layout-desktop .listItem-largeImage .listViewUserDataButtons {
+    flex-direction: column;
+    font-size: small;
+    order: 2;
+    grid-column: 3;
+    align-self: center;
+  }
+}
+
+/* ============================================================
+   PAPER LIST (queue, etc)
+   ============================================================ */
+.paperList {
+  background-color: var(--headerColor) !important;
+  border-radius: var(--sf-radius-lg) !important;
+  border: var(--defaultBorder) !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.detailTable { border-collapse: separate; border-spacing: 0; }
+.detailTableBody { background-color: var(--tableBodyColor) !important; border-radius: var(--sf-radius-md); }
+.detailTableBodyRow:hover td { background: var(--sf-bg-elevated) !important; }
+
+/* ============================================================
+   CHECKBOXES / TOGGLES — orange checked state
+   ============================================================ */
+.emby-checkbox:checked,
+.mdl-checkbox__box-outline:checked,
+.checkboxOutlined.is-checked .checkboxOutlinedBox {
+  background: var(--sf-accent) !important;
+  border-color: var(--sf-accent) !important;
+}
+
+.emby-checkbox:checked + .emby-checkbox-label::before,
+.emby-checkbox-label.is-checked::before {
+  border-color: var(--sf-accent) !important;
+  background: var(--sf-accent) !important;
+}
+
+/* ============================================================
+   FORM INPUTS
+   ============================================================ */
+.emby-input,
+.emby-select,
+.emby-textarea {
+  background: var(--sf-bg-input) !important;
+  border: 1px solid var(--sf-border) !important;
+  border-radius: var(--sf-radius-md) !important;
+  color: var(--sf-text) !important;
+  transition: border-color 150ms ease !important;
+}
+
+.emby-input:focus,
+.emby-select:focus,
+.emby-textarea:focus {
+  border-color: var(--sf-accent) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--sf-accent-dim) !important;
+}
+
+/* ============================================================
+   DIALOGS / MODALS
+   Jellyseerr uses dark elevated cards for modals
+   ============================================================ */
+.dialogContainer,
+.dialog,
+.focuscontainer-dialog {
+  background: var(--sf-bg-surface) !important;
+  border: 1px solid var(--sf-border) !important;
+  border-radius: var(--sf-radius-xl) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ============================================================
+   TOOLTIPS
+   ============================================================ */
+.tooltip {
+  background: var(--sf-bg-overlay) !important;
+  border: 1px solid var(--sf-border) !important;
+  border-radius: var(--sf-radius-sm) !important;
+  color: var(--sf-text) !important;
+  font-size: 0.8em !important;
+  box-shadow: var(--sf-shadow-card) !important;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   Jellyseerr-thin, orange thumb on hover
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(55, 65, 90, 0.6);
+  border-radius: 3px;
+  transition: background 150ms ease;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--sf-accent); }
+
+/* ============================================================
+   OSD (ON-SCREEN DISPLAY) — playback controls
+   ============================================================ */
+.osdProgressBar {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.osdProgressInner,
+.osdPositionSlider .mdl-slider__container .mdl-slider__background-flex .mdl-slider__background-lower {
+  background: var(--sf-accent) !important;
+}
+
+/* ============================================================
+   CARD COUNT RESPONSIVE GRID
+   (preserved from ElegantFin — same grid logic)
+   ============================================================ */
+.portraitCard { min-width: 5em; }
+.bannerCard { --cardCount: 2; }
+
+@media (min-width: 300em) {
+  .portraitCard, .squareCard { --cardCount: 16; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 15; }
+  .squareCard:has(.cardFooter) { --cardCount: 12; }
+  .backdropCard { --cardCount: 12; }
+  .overflowBackdropCard { --cardCount: 11; }
+}
+@media (max-width: 300em) {
+  .portraitCard, .squareCard { --cardCount: 15; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 14; }
+  .squareCard:has(.cardFooter) { --cardCount: 11; }
+  .backdropCard { --cardCount: 11; }
+  .overflowBackdropCard { --cardCount: 10; }
+}
+@media (max-width: 270em) {
+  .portraitCard, .squareCard { --cardCount: 14; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 13; }
+  .squareCard:has(.cardFooter) { --cardCount: 10; }
+  .backdropCard { --cardCount: 10; }
+  .overflowBackdropCard { --cardCount: 9; }
+}
+@media (max-width: 240em) {
+  .portraitCard, .squareCard { --cardCount: 13; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 12; }
+  .squareCard:has(.cardFooter) { --cardCount: 10; }
+  .backdropCard { --cardCount: 10; }
+  .overflowBackdropCard { --cardCount: 9; }
+}
+@media (max-width: 220em) {
+  .portraitCard, .squareCard { --cardCount: 12; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 11; }
+  .squareCard:has(.cardFooter) { --cardCount: 9; }
+  .backdropCard { --cardCount: 9; }
+  .overflowBackdropCard { --cardCount: 8; }
+}
+@media (max-width: 200em) {
+  .portraitCard, .squareCard { --cardCount: 11; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 10; }
+  .squareCard:has(.cardFooter) { --cardCount: 9; }
+  .backdropCard { --cardCount: 9; }
+  .overflowBackdropCard { --cardCount: 8; }
+}
+@media (max-width: 170em) {
+  .portraitCard, .squareCard { --cardCount: 10; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 9; }
+  .squareCard:has(.cardFooter) { --cardCount: 9; }
+  .backdropCard { --cardCount: 8; }
+  .overflowBackdropCard { --cardCount: 7; }
+}
+@media (max-width: 140em) {
+  .portraitCard, .squareCard { --cardCount: 9; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 8; }
+  .squareCard:has(.cardFooter) { --cardCount: 7; }
+  .backdropCard { --cardCount: 7; }
+  .overflowBackdropCard { --cardCount: 6; }
+}
+@media (max-width: 120em) {
+  .portraitCard, .squareCard { --cardCount: 8; }
+  .overflowPortraitCard, .overflowSquareCard { --cardCount: 7; }
+  .layout-tv .portraitCard, .layout-tv .squareCard,
+  .layout-tv .overflowPortraitCard, .layout-tv .overflowSquareCard { --cardCount: 6; }
+  .squareCard:has(.cardFooter) { --cardCount: 6; }
+  .backdropCard { --cardCount: 6; }
+  .overflowBackdropCard { --cardCount: 5; }
+  .layout-tv .backdropCard, .layout-tv .overflowBackdropCard { --cardCount: 4; }
+}
+@media (max-width: 100em) {
+  .portraitCard, .squareCard, .overflowPortraitCard, .overflowSquareCard { --cardCount: 7; }
+  .squareCard:has(.cardFooter) { --cardCount: 6; }
+  .backdropCard { --cardCount: 6; }
+  .overflowBackdropCard { --cardCount: 5; }
+}
+@media (max-width: 80em) {
+  .portraitCard, .squareCard, .overflowPortraitCard, .overflowSquareCard { --cardCount: 6; }
+  .squareCard:has(.cardFooter) { --cardCount: 5; }
+  .overflowBackdropCard, .backdropCard { --cardCount: 4; }
+}
+@media (max-width: 62em) {
+  .portraitCard, .squareCard, .overflowPortraitCard, .overflowSquareCard { --cardCount: 5; }
+  .squareCard:has(.cardFooter) { --cardCount: 4; }
+  .backdropCard, .overflowBackdropCard { --cardCount: 4; }
+}
+@media (max-width: 48.125em) {
+  .portraitCard, .squareCard, .overflowPortraitCard, .overflowSquareCard { --cardCount: 4; }
+  .squareCard:has(.cardFooter) { --cardCount: 3; }
+  .backdropCard, .overflowBackdropCard { --cardCount: 3; }
+}
+@media (max-width: 30em) {
+  .portraitCard, .squareCard, .overflowPortraitCard, .overflowSquareCard,
+  .layout-mobile .portraitCard, .layout-mobile .squareCard,
+  .layout-mobile .overflowPortraitCard, .layout-mobile .overflowSquareCard { --cardCount: 3; }
+  .squareCard:has(.cardFooter) { --cardCount: 2; }
+  .backdropCard, .overflowBackdropCard { --cardCount: 2; }
+}
+
+/* ============================================================
+   CARD SIZING
+   ============================================================ */
+.layout-mobile .card { --sidePadding: 5%; }
+
+.card {
+  --effectiveWidth: calc((99vw - (var(--sidePadding) * 2)));
+  --cardWidth: calc(var(--effectiveWidth) / var(--cardCount) - var(--itemColumnGap));
+  width: var(--cardWidth) !important;
+  padding: 0.375em;
+  transition: width 0.5s;
+  box-sizing: content-box;
+}
+
+@supports (aspect-ratio: 1 / 1) { .card { box-sizing: border-box; } }
+
+.layout-mobile .card { --cardWidth: calc(var(--effectiveWidth) / var(--cardCount)); }
+
+@media (orientation: landscape) and (max-height: 40em) {
+  .layout-mobile .card { --effectiveWidth: calc((65vw - (var(--sidePadding) * 2))); }
+}
+
+.cardBox-bottompadded { margin-bottom: 0.5em !important; }
+@media (max-width: 50em) { .cardBox-bottompadded { margin-bottom: 0.25em !important; } }
+
+[dir="ltr"] .itemsContainer > .card > .cardBox { margin-left: auto; margin-right: auto; }
+
+/* ============================================================
+   VERTICAL WRAP
+   ============================================================ */
+.vertical-wrap:not(.centered) { justify-content: flex-start !important; }
+
+/* ============================================================
+   ICON BUTTON SIZING
+   ============================================================ */
+.paper-icon-button-light > .material-icons { font-size: 1.25em; }
+
+/* ============================================================
+   HEADER BUTTONS
+   ============================================================ */
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes sf-fade-down {
+  from { transform: translateY(-2em); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes sf-fade-down-secondary {
+  from { transform: translateY(-2em); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 0.3; }
+}
+
+@keyframes sf-logo-up {
+  from { transform: translateY(-90%); opacity: 0; }
+  to   { transform: translateY(-100%); opacity: 1; }
+}
+
+@keyframes sf-pulse-orange {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+  50%       { box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2); }
+}
+
+/* ============================================================
+   MOBILE LANDSCAPE ADJUSTMENTS
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 40em) {
+  .layout-mobile .card {
+    --effectiveWidth: calc((65vw - (var(--sidePadding) * 2)));
+  }
+}
+
+/* ============================================================
+   JELLYSEERR-STYLE STATUS BADGES
+   These mimic the "Available", "Requested", "Processing"
+   status pills seen in Jellyseerr's media cards
+   ============================================================ */
+
+/* Available = teal */
+.mediaStatus-available,
+.unplayedCount.available { background: var(--sf-teal) !important; color: #0a1a18 !important; }
+
+/* Requested = orange */
+.mediaStatus-requested,
+.unplayedCount.requested { background: var(--sf-accent) !important; color: #1a0a00 !important; }
+
+/* Processing = amber */
+.mediaStatus-processing { background: var(--sf-amber) !important; color: #1a1000 !important; }
+
+/* Unavailable = muted */
+.mediaStatus-unavailable { background: var(--sf-bg-elevated) !important; color: var(--sf-text-dim) !important; }
+
+/* ============================================================
+   LOGIN PAGE — Jellyseerr's dark cinematic login
+   ============================================================ */
+.readOnlyContent,
+#loginPage,
+.loginPage {
+  background: var(--sf-bg-base) !important;
+}
+
+.loginDisclaimer {
+  color: var(--sf-text-dim) !important;
+  font-size: 0.85em;
+}
+
+/* Login form card */
+#loginPage .readOnlyContent > div,
+.loginPage .readOnlyContent > div {
+  background: var(--sf-bg-surface) !important;
+  border: 1px solid var(--sf-border) !important;
+  border-radius: var(--sf-radius-xl) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Login button — orange */
+#loginPage .raised.emby-button,
+.loginPage .raised.emby-button {
+  background: var(--sf-accent) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  border-radius: var(--sf-radius-md) !important;
+}
+
+#loginPage .raised.emby-button:hover,
+.loginPage .raised.emby-button:hover {
+  background: var(--sf-accent-hover) !important;
+}
+
+/* ============================================================
+   DASHBOARD SPECIFIC
+   Admin panels remain readable in the darker palette
+   ============================================================ */
+.dashboardContentPage {
+  background: var(--sf-bg-base) !important;
+}
+
+.dashboardSection {
+  background: var(--sf-bg-surface) !important;
+  border: 1px solid var(--sf-border) !important;
+  border-radius: var(--sf-radius-lg) !important;
+}
+
+/* ============================================================
+   MUSIC PLAYER BAR (bottom)
+   ============================================================ */
+.nowPlayingBar {
+  background: rgba(17, 24, 39, 0.97) !important;
+  border-top: 1px solid var(--sf-border) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITY
+   ============================================================ */
+@media (max-width: 50em) {
+  :root { --sidePadding: 4%; }
+}
+
+/* ============================================================
+   END OF SeerFin v1.0
+   ============================================================ */
