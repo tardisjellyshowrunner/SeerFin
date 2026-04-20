@@ -1,7 +1,7 @@
 /* ============================================================
    SeerFin — A Jellyfin Theme Inspired by Jellyseerr
    Author: Generated for Alex @ POLARIS
-   Version: 1.0.0
+   Version: 1.1.0
    Based on ElegantFin by lscambo13 as structural foundation.
    Colour palette & aesthetic derived from Jellyseerr (seerr-team/seerr).
 
@@ -41,12 +41,12 @@
 :root {
   color-scheme: dark;
 
-  /* ── Backgrounds ── */
-  --sf-bg-base:        #0f1117;      /* deeper than Jellyseerr's 900, cinematic black */
-  --sf-bg-surface:     #161b26;      /* card surfaces, nav drawer */
-  --sf-bg-elevated:    #1e2535;      /* hover states, elevated panels */
-  --sf-bg-overlay:     #252d3d;      /* tooltips, dropdowns */
-  --sf-bg-input:       #1a2030;      /* form fields */
+  /* ── Backgrounds — Jellyseerr gray-900/800/700 navy palette ── */
+  --sf-bg-base:        #111827;      /* Jellyseerr gray-900 — warm navy, not cold black */
+  --sf-bg-surface:     #1f2937;      /* Jellyseerr gray-800 — card surfaces, drawer */
+  --sf-bg-elevated:    #374151;      /* Jellyseerr gray-700 — hover states, elevated panels */
+  --sf-bg-overlay:     #2d3748;      /* tooltips, dropdowns */
+  --sf-bg-input:       #1a2232;      /* form fields */
 
   /* ── Borders ── */
   --sf-border:         rgba(55, 65, 90, 0.8);
@@ -94,9 +94,9 @@
   --sf-blur-lg:        blur(20px);
 
   /* ── Gradients ── */
-  --sf-bg-gradient:    linear-gradient(160deg, #0f1117 0%, #161b26 100%);
-  --sf-card-gradient:  linear-gradient(180deg, #1e2535 0%, #161b26 100%);
-  --sf-header-gradient:linear-gradient(180deg, rgba(15,17,23,0.96) 0%, 60%, transparent 100%);
+  --sf-bg-gradient:    linear-gradient(160deg, #111827 0%, #1f2937 100%);
+  --sf-card-gradient:  linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  --sf-header-gradient:linear-gradient(180deg, rgba(17,24,39,0.97) 0%, 60%, transparent 100%);
   --sf-footer-overlay: linear-gradient(0deg, rgba(0,0,0,0.92) 0%, 40%, transparent 100%);
   --sf-osd-top:        linear-gradient(180deg, rgba(0,0,0,0.85) 0%, 45%, transparent 100%);
   --sf-osd-bottom:     linear-gradient(0deg,   rgba(0,0,0,0.85) 0%, 45%, transparent 100%);
@@ -110,7 +110,7 @@
   --sf-border-dbl:     0.12em;
 
   /* ── Footer label ── */
-  --sf-footer-text:    "SeerFin v1.0";
+  --sf-footer-text:    "SeerFin v1.1";
 
   /* ── Feature flags (match ElegantFin variable names Jellyfin reads) ── */
   --overlayPlayButtonPosition: 2.8em;
@@ -126,13 +126,13 @@
   --backdropTrimFromTop:       10%;
 
   /* ── ElegantFin-compatible variable aliases ── */
-  --darkerGradientPoint:       #0f1117;
-  --darkerGradientPointAlpha:  rgba(15, 17, 23, 0.88);
-  --lighterGradientPoint:      #1e2535;
-  --lighterGradientPointAlpha: rgba(30, 37, 53, 0.88);
-  --gradientPointAlpha:        rgba(30, 37, 53, 0.3);
-  --headerColor:               rgba(21, 27, 38, 0.88);
-  --drawerColor:               rgba(21, 27, 38, 0.95);
+  --darkerGradientPoint:       #111827;
+  --darkerGradientPointAlpha:  rgba(17, 24, 39, 0.88);
+  --lighterGradientPoint:      #1f2937;
+  --lighterGradientPointAlpha: rgba(31, 41, 55, 0.88);
+  --gradientPointAlpha:        rgba(31, 41, 55, 0.3);
+  --headerColor:               rgba(17, 24, 39, 0.92);
+  --drawerColor:               rgba(17, 24, 39, 0.97);
   --borderColor:               hsl(220, 20%, 30%);
   --darkerBorderColor:         hsl(220, 20%, 20%);
   --lighterBorderColor:        rgba(255, 255, 255, 0.12);
@@ -158,7 +158,7 @@
   --backgroundGradient:        var(--sf-bg-gradient);
   --cardBackgroundGradient:    var(--sf-card-gradient);
   --headerColorGradient:       var(--sf-header-gradient);
-  --headerColorGradientAlt:    linear-gradient(180deg, rgba(21,27,38,1), 70%, transparent);
+  --headerColorGradientAlt:    linear-gradient(180deg, rgba(17,24,39,1), 70%, transparent);
   --headerBlurMask:            linear-gradient(180deg, white 50%, 85%, transparent);
   --headerBlurLayerVisibility: "";
   --headerBackground:          var(--headerColorGradient);
@@ -254,8 +254,48 @@ body {
   color: var(--sf-accent);
 }
 
-/* Tabs active indicator */
-.emby-tabs-slider { background: var(--sf-accent) !important; }
+/* ============================================================
+   TAB BAR
+   Jellyfin uses --uiAccentColor as the background of .headerTabs
+   which is what causes the solid orange stripe. Override to dark.
+   ============================================================ */
+.headerTabs,
+.sectionTabs,
+.tabs-top .emby-tabs {
+  background: rgba(17, 24, 39, 0.97) !important;
+  border-bottom: 1px solid rgba(55, 65, 90, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Individual tab buttons — muted by default, white when active */
+.emby-tabs-tab,
+.pageTabButton {
+  color: var(--sf-text-dim) !important;
+  background: transparent !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  transition: color 150ms ease !important;
+}
+
+.emby-tabs-tab:hover,
+.pageTabButton:hover {
+  color: var(--sf-text) !important;
+  background: transparent !important;
+}
+
+.emby-tabs-tab.is-active,
+.pageTabButton.is-active {
+  color: #ffffff !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+}
+
+/* The sliding active underline indicator — keep orange */
+.emby-tabs-slider {
+  background: var(--sf-accent) !important;
+  height: 2px !important;
+}
 
 /* Active sidebar item */
 .navMenuOption.is-selected,
@@ -317,8 +357,8 @@ body {
 
 .skinHeader-withBackground {
   background: linear-gradient(180deg,
-    rgba(15, 17, 23, 0.97) 0%,
-    rgba(15, 17, 23, 0.92) 70%,
+    rgba(17, 24, 39, 0.97) 0%,
+    rgba(17, 24, 39, 0.92) 70%,
     transparent 100%
   ) !important;
   backdrop-filter: blur(8px) !important;
@@ -334,7 +374,7 @@ body {
    Jellyseerr sidebar: near-opaque dark surface, orange active items
    ============================================================ */
 .mainDrawer {
-  background: rgba(21, 27, 38, 0.97) !important;
+  background: rgba(17, 24, 39, 0.97) !important;
   border-right: 1px solid rgba(55, 65, 90, 0.4) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
@@ -415,11 +455,11 @@ body {
   color: var(--sf-text-faint);
 }
 
-/* Card hover: orange ring instead of white */
+/* Card hover: subtle orange 1px border + faint glow — not heavy */
 .card-hoverable:hover .cardScalable,
 .card-hoverable:hover .visualCardBox {
-  border-color: var(--sf-accent) !important;
-  box-shadow: 0 0 0 1px var(--sf-accent-border), var(--sf-shadow-card) !important;
+  border-color: rgba(249, 115, 22, 0.6) !important;
+  box-shadow: 0 0 0 0px transparent, var(--sf-shadow-card) !important;
 }
 
 .card-hoverable:hover .visualCardBox .cardScalable {
@@ -649,7 +689,7 @@ body {
 [dir="ltr"] .mediaInfoCriticRating::after { content: "%"; }
 
 /* ============================================================
-   SECTION TITLES
+   SECTION TITLES — plain bold white, matching Jellyseerr
    ============================================================ */
 .layout-desktop .sectionTitle,
 .layout-tv .sectionTitle {
@@ -660,15 +700,9 @@ body {
   color: var(--sf-text) !important;
 }
 
-/* Orange accent line under section titles */
+/* No decorative underline — Jellyseerr keeps titles clean */
 .sectionTitle::after {
-  content: "";
-  display: block;
-  width: 2.5em;
-  height: 2px;
-  background: var(--sf-accent);
-  margin-top: 0.3em;
-  border-radius: 1px;
+  display: none;
 }
 
 .verticalSection.emby-scroller-container > h2.sectionTitle.sectionTitle-cards {
@@ -1326,7 +1360,7 @@ body {
    MUSIC PLAYER BAR (bottom)
    ============================================================ */
 .nowPlayingBar {
-  background: rgba(15, 17, 23, 0.97) !important;
+  background: rgba(17, 24, 39, 0.97) !important;
   border-top: 1px solid var(--sf-border) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
