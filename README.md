@@ -1,5 +1,6 @@
 <div align="center">
 
+![SeerFin Logo](https://github.com/tardisjellyshowrunner/SeerFin/blob/main/Assets/SeerFin%20-%20Logo%20-%20250.png?raw=true)
 # SeerFin
 
 **A Jellyfin theme inspired by Jellyseerr**
