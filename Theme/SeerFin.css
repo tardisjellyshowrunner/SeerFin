@@ -261,37 +261,44 @@ body {
    ============================================================ */
 .headerTabs,
 .sectionTabs,
-.tabs-top .emby-tabs {
-  background: rgba(17, 24, 39, 0.97) !important;
-  border-bottom: 1px solid rgba(55, 65, 90, 0.3) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+.tabs-top .emby-tabs,
+.emby-tabs,
+div.emby-tabs {
+  background: #111827 !important;
+  border-bottom: 1px solid rgba(55, 65, 90, 0.35) !important;
+  min-height: 3em !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* Individual tab buttons — muted by default, white when active */
 .emby-tabs-tab,
-.pageTabButton {
-  color: var(--sf-text-dim) !important;
+.pageTabButton,
+.emby-tabs .emby-button {
+  color: rgba(156, 163, 175, 0.9) !important;
   background: transparent !important;
   font-weight: 500 !important;
   letter-spacing: 0.01em !important;
   transition: color 150ms ease !important;
+  padding: 0.75em 1em !important;
 }
 
 .emby-tabs-tab:hover,
-.pageTabButton:hover {
-  color: var(--sf-text) !important;
+.pageTabButton:hover,
+.emby-tabs .emby-button:hover {
+  color: #ffffff !important;
   background: transparent !important;
 }
 
 .emby-tabs-tab.is-active,
-.pageTabButton.is-active {
+.pageTabButton.is-active,
+.emby-tabs .emby-button.emby-tabs-selected {
   color: #ffffff !important;
   background: transparent !important;
   font-weight: 600 !important;
 }
 
-/* The sliding active underline indicator — keep orange */
+/* The sliding active underline indicator — orange, slim */
 .emby-tabs-slider {
   background: var(--sf-accent) !important;
   height: 2px !important;
@@ -352,18 +359,12 @@ body {
    Jellyseerr-style: darker, tighter, subtle separator
    ============================================================ */
 .skinHeader {
-  background: transparent !important;
+  background: #111827 !important;
 }
 
 .skinHeader-withBackground {
-  background: linear-gradient(180deg,
-    rgba(17, 24, 39, 0.97) 0%,
-    rgba(17, 24, 39, 0.92) 70%,
-    transparent 100%
-  ) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border-bottom: 1px solid rgba(55, 65, 90, 0.25) !important;
+  background: #111827 !important;
+  border-bottom: 1px solid rgba(55, 65, 90, 0.35) !important;
 }
 
 .skinHeader-withBackground:not(.semiTransparent) .headerHomeButton { display: none; }
